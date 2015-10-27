@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div>
+    <form id="myform" action="/json" accept-charset="UTF-8" method="get">
+        Enter numerator: <input id="n" type="text" name="num"><br>
+        Enter denominator: <input id="d" type="text" name="denom"><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<div id="output">
+</div>
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+
+<script>
+
+$(function(){
+    $("#myform").submit(RunAjax);
+});
+
+function RunAjax(e){
+    var ws = e.target.action;
+    console.log(ws);
+    var num = $("#n").val();
+    console.log(num);
+    var denom = $("#d").val();
+    console.log(denom);
+
+    var args = $("#myform").serializeArray();
+    console.log(args);
+
+    $.getJSON(ws, args, Process);
+    return false;
+}
+
+
+function Process(data){
+    console.log("processing json");
+    var html = "";
+    $.each(data, function(i, v) {
+        html += "<p>"+i+ " : " + v + "</p>";
+    });
+    $("#output").empty().append(html);
+}
+</script>
+
+</html>
